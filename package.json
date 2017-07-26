@@ -1,0 +1,47 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anshiii/vue-example.git"
+  },
+  "keywords": [
+    "vue"
+  ],
+  "author": "anshi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anshiii/vue-example/issues"
+  },
+  "homepage": "https://github.com/Anshiii/vue-example#readme",
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.0",
+    "css-loader": "^0.28.0",
+    "node-sass": "^4.5.2",
+    "sass-loader": "^6.0.3",
+    "vue-loader": "^12.1.0",
+    "vue-template-compiler": "^2.3.3",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.6.1",
+    "whatwg-fetch": "^2.0.3"
+  },
+  "dependencies": {
+    "vue": "^2.3.3"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "browserslist": [
+    "android > 4",
+    "ios > 7"
+  ]
+}
