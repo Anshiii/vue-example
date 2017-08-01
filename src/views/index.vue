@@ -3,6 +3,7 @@
         <div class="bannerSwipe">
             <swipe :swipes="swipes"></swipe>
         </div>
+
         <div class="poster">
             <img class="poster__bg" :src="poster.bg">
             <div class="content">
@@ -20,15 +21,22 @@
                 </div>
             </div>
         </div>
+
         <div class="reservation">
             <img class="reservation__logo">
             <div class="reservation__h1" v-html=" addEnter(reservation.h1)"></div>
             <div class="reservation__des" v-html=" addEnter(reservation.des)"></div>
-            <form>
-                <my-select class="reservation__select" :options="reservation.houseOptions"></my-select>
-                <my-select class="reservation__select" :options="reservation.areaOptions"></my-select>
+            <form @submit.stop.prevent="submitPosition">
+                <my-select v-model="reservation.value.house" class="reservation__select"
+                           :options="reservation.houseOptions"></my-select>
+                <my-select v-model="reservation.value.area" class="reservation__select"
+                           :options="reservation.areaOptions"></my-select>
                 <field :placeholder="reservation.districtPlaceholder" v-model="reservation.value.district"></field>
-                <button class="reservation__button" type="submit" @submit.stop.prevent="submitPosition">{{reservation.buttonText}}</button>
+                <button class="reservation__button" type="submit">
+                    {{reservation.buttonText}}
+
+
+                </button>
             </form>
         </div>
     </div>
@@ -36,18 +44,19 @@
 <script>
   import swipe from '../components/swipe.vue';
   import mySelect from '../components/select.vue';
-  import { Field } from 'mint-ui';
+  import {Field} from 'mint-ui';
 
-//  Vue.component(Field.name, Field);
+  //  Vue.component(Field.name, Field);
 
   export default{
 	components: {
 	  swipe,
 	  mySelect,
-      Field
+	  Field
 	},
 	data(){
 	  return {
+		fruit: "",
 		swipes: [],
 		poster: {
 		  h1: "VR全屋装||所见即所得",
@@ -58,15 +67,15 @@
 		  arrowR: "src/assest/images/arrowRight.svg",
 		  arrowB: "src/assest/images/arrowBottom.svg"
 		},
-		reservation:{
-		  "h1":"现在预约",
-          "des":"免费获得客厅VR全景方案",
-          houseOptions:[{text:"毛坯房",value:0},{text:"简装房",value:1}],
-          areaOptions:[{text:"杭州市",value:0},{text:"广州市",value:0}],
-		  districtPlaceholder:"所在小区",
-		  buttonText:"现在预约",
-		  value:{houseOptions:null,areaOptions:null,district:""},
-        }
+		reservation: {
+		  h1: "现在预约",
+		  des: "免费获得客厅VR全景方案",
+		  houseOptions: [{text: "毛坯房", value: 0}, {text: "简装房", value: 1}],
+		  areaOptions: [{text: "杭州市", value: 0}, {text: "广州市", value: 1}],
+		  districtPlaceholder: "所在小区",
+		  buttonText: "现在预约",
+		  value: {house: 0, area: 0, district: ""},
+		}
 	  }
 	},
 	created(){
@@ -85,8 +94,12 @@
 		return value.replace(/\|\|/gi, '<br>');
 	  },
 	  submitPosition(){
+		if (this.reservation.value.district.length > 0) {
+		  //后期判断小区是否和所选位置的代号相同。
+		  console.log("预约成功");
+		}
 
-      }
+	  }
 	}
   }
 </script>
@@ -99,7 +112,6 @@
         height: rem(420);
     }
 
-
     .poster {
         position: relative;
         height: rem(1080);
@@ -111,6 +123,7 @@
             z-index: -1;
         }
     }
+
     .content {
         padding-left: rem(104);
         &__h1 {
@@ -141,6 +154,7 @@
             }
         }
     }
+
     .ripple {
         position: relative;
         %ripple {
@@ -157,9 +171,9 @@
             box-sizing: border-box;
             border: 1px solid rgb(57, 213, 194);
         }
-        @for $i from 1 through 3{
-            i:nth-of-type(#{$i}){
-                animation: ripple 2s ease-out ($i - 1)*1s infinite ;
+        @for $i from 1 through 3 {
+            i:nth-of-type(#{$i}) {
+                animation: ripple 2s ease-out ($i - 1)*1s infinite;
             }
         }
         &__button {
@@ -187,17 +201,17 @@
 
     }
 
-    .reservation{
-        background-color: rgb(245,245,245);
-        padding:rem(72) rem(104) 0;
+    .reservation {
+        background-color: rgb(245, 245, 245);
+        padding: rem(72) rem(104) 0;
         text-align: center;
-        &__select{
+        &__select {
             width: 100%;
             height: rem(80);
             text-align: left;
             margin-bottom: rem(40);
         }
-        &__button{
+        &__button {
             margin: 0;
             padding: 0;
             width: 100%;
