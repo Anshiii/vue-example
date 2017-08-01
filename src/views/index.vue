@@ -17,18 +17,34 @@
                     <div class="ripple__button">
                         <img :src="poster.arrowB">
                     </div>
-
                 </div>
             </div>
+        </div>
+        <div class="reservation">
+            <img class="reservation__logo">
+            <div class="reservation__h1" v-html=" addEnter(reservation.h1)"></div>
+            <div class="reservation__des" v-html=" addEnter(reservation.des)"></div>
+            <form>
+                <my-select class="reservation__select" :options="reservation.houseOptions"></my-select>
+                <my-select class="reservation__select" :options="reservation.areaOptions"></my-select>
+                <field :placeholder="reservation.districtPlaceholder" v-model="reservation.value.district"></field>
+                <button class="reservation__button" type="submit" @submit.stop.prevent="submitPosition">{{reservation.buttonText}}</button>
+            </form>
         </div>
     </div>
 </template>
 <script>
   import swipe from '../components/swipe.vue';
+  import mySelect from '../components/select.vue';
+  import { Field } from 'mint-ui';
+
+//  Vue.component(Field.name, Field);
 
   export default{
 	components: {
-	  swipe
+	  swipe,
+	  mySelect,
+      Field
 	},
 	data(){
 	  return {
@@ -41,7 +57,16 @@
 		  button: "了解更多",
 		  arrowR: "src/assest/images/arrowRight.svg",
 		  arrowB: "src/assest/images/arrowBottom.svg"
-		}
+		},
+		reservation:{
+		  "h1":"现在预约",
+          "des":"免费获得客厅VR全景方案",
+          houseOptions:[{text:"毛坯房",value:0},{text:"简装房",value:1}],
+          areaOptions:[{text:"杭州市",value:0},{text:"广州市",value:0}],
+		  districtPlaceholder:"所在小区",
+		  buttonText:"现在预约",
+		  value:{houseOptions:null,areaOptions:null,district:""},
+        }
 	  }
 	},
 	created(){
@@ -58,7 +83,10 @@
 	  },
 	  addEnter(value){
 		return value.replace(/\|\|/gi, '<br>');
-	  }
+	  },
+	  submitPosition(){
+
+      }
 	}
   }
 </script>
@@ -71,6 +99,7 @@
         height: rem(420);
     }
 
+
     .poster {
         position: relative;
         height: rem(1080);
@@ -82,7 +111,6 @@
             z-index: -1;
         }
     }
-
     .content {
         padding-left: rem(104);
         &__h1 {
@@ -113,7 +141,6 @@
             }
         }
     }
-
     .ripple {
         position: relative;
         %ripple {
@@ -132,7 +159,7 @@
         }
         @for $i from 1 through 3{
             i:nth-of-type(#{$i}){
-                animation: ripple 1s ease-out $i*0.5s infinite ;
+                animation: ripple 2s ease-out ($i - 1)*1s infinite ;
             }
         }
         &__button {
@@ -160,5 +187,21 @@
 
     }
 
-
+    .reservation{
+        background-color: rgb(245,245,245);
+        padding:rem(72) rem(104) 0;
+        text-align: center;
+        &__select{
+            width: 100%;
+            height: rem(80);
+            text-align: left;
+            margin-bottom: rem(40);
+        }
+        &__button{
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: rem(80);
+        }
+    }
 </style>
